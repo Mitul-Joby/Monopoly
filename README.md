@@ -1,2 +1,2 @@
 # Monopoly
- Simple implementaion of the board game monopoly
+ Simple implementation of the board game monopoly
