@@ -1,0 +1,9 @@
+.vscode
+Testing
+
+# Object files
+*.o
+
+# Executables
+*.exe
+*.out
