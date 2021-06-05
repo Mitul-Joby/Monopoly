@@ -1,20 +1,12 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "definitions.h"
 
-
-int Readfile()
+int ReadLocations()
 {
-	FILE *file = fopen(PATH, "r");
-
-	if (!file){
-		printf("\nFile could not be opened\n");
-        return 1;
-    }
-	else{
+	FILE *file = fopen(LOCATION_PATH, "r");
+	if (!file)
+        return EXIT_FAILURE;
+	else
+    {
 		char buffer[1024];
 		int row = 0, column = 0, flag = 0;
 		while (fgets(buffer,1024, file)) {
@@ -58,6 +50,9 @@ int Readfile()
                                 else if (strcmpi(value,"PROPERTY")==0){
                                     Location[row-1].Type = PROPERTY;   
                                     Location[row-1].isOwnable = True;
+                                    Location[row-1].isSetComplete = False;
+                                    Location[row-1].housesBuilt = 0;
+                                    Location[row-1].hotelBuilt  = 0;
                                 }   
                                 break;
                         case 2: strcpy(Location[row-1].name,value);          
@@ -68,6 +63,7 @@ int Readfile()
                     }
                     if (column==6 && Location[row-1].Type > 5){
                         Location[row-1].intialRent = atoi(value);
+                        Location[row-1].Rent = atoi(value);
                     }
                     if (Location[row-1].Type == PROPERTY){
                         switch(column){
@@ -97,4 +93,73 @@ int Readfile()
 		}
 		fclose(file);
 	}
-}                        
+    return EXIT_SUCCESS;
+}
+
+int ReadCards(int CardType)
+{
+    FILE *file;
+    srand(time(0));
+    int randomRecord=0;
+    if (CardType == CHEST)
+    {
+	    file = fopen(CHEST_PATH, "r");
+        randomRecord = (rand()%(MAX_CHESTCARDS))+1;
+    }
+    else if (CardType == CHANCE)
+    {
+	    file = fopen(CHANCE_PATH, "r");	  
+        randomRecord = (rand()%(MAX_CHANCECARDS))+1;
+    }
+    else
+    {
+        return EXIT_FAILURE;   
+    }
+
+	if (!file)
+        return EXIT_FAILURE;
+	else
+    {
+        drawnCard.ID  =0;
+        drawnCard.Type=0;
+        strcpy(drawnCard.Description,0);
+		char buffer[1024];
+		int row = 0, column = 0, flag = 0;
+		while (fgets(buffer,1024, file)) {
+			column = 0; 
+			char* value = strtok(buffer, ",");
+            while (value) {
+                if (row != randomRecord)
+				    break;   
+                else
+                {
+                    switch(column){
+                        case 0: drawnCard.ID=atoi(value);
+                                break;
+                        case 1: drawnCard.Type=atoi(value);
+                                break;
+                        case 2: strcpy(drawnCard.Description,value);   
+                                break;    
+                    } 
+                    value = strtok(NULL, ",");
+                    column++;
+                }
+			}
+            row++;
+		}
+		fclose(file);
+	}
+    return EXIT_SUCCESS;
+}
+
+int TimedInput(int seconds,int Default)
+{
+    int numInput;
+    clock_t start = clock();
+    while ( ! _kbhit() )
+        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
+            return Default;
+    scanf("%d",&numInput);
+    return numInput;
+}
+
