@@ -5,7 +5,7 @@ int PlayerRolls()
     return (rand()%6)+1;
 }
 
-void ReadPlayers(int *numberOfPlayers, char (*Names)[30])
+int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
 {
     char inp[1];
     while (True){
@@ -27,9 +27,10 @@ void ReadPlayers(int *numberOfPlayers, char (*Names)[30])
         scanf("%s",&Names[i]);
         system("@cls||clear");
     } 
+    return EXIT_SUCCESS;
 }
 
-void SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
+int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
 {
     srand(time(0));
     int die1, die2, order[numberOfPlayers], len=strlen(Names[0]);
@@ -59,6 +60,7 @@ void SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
             }
         }           
     }
+    return EXIT_SUCCESS;
 }
 
 int isPlayerBankrupt(int cashInHand)

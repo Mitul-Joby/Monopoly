@@ -1,5 +1,33 @@
 #include "definitions.h"
 
+int SelectGamemode()
+{
+    char Choice;
+    while(True)
+    {
+        system("@cls||clear");
+        printf("\nChoose a game mode:");
+        printf("\n  1-Networth : First player to reach a certain amount wins");
+        printf("\n  2-Turns    : Game ends after ceratin number of turns/rounds are over");
+        printf("\n  3-Endless  : Game goes on untill everyone except one player gets bankrupt");
+        printf("\n  X-Exit\n\n");
+        Choice = getch();
+        if (Choice == '1')
+            return NETWORTH;
+        else if (Choice == '2')
+            return TURNS;
+        else if (Choice == '3')
+            return ENDLESS;
+        else if (Choice == 'X'|| Choice == 'x')
+            return EXIT;
+        else
+        {
+            printf("\n\nYou entered an invalid choice \"%c\". Enter any key to try again.",Choice);
+            getch();
+        }
+    }
+}    
+
 int ReadLocations()
 {
 	FILE *file = fopen(LOCATION_PATH, "r");
@@ -152,7 +180,7 @@ int ReadCards(int CardType)
     return EXIT_SUCCESS;
 }
 
-int TimedInput(int seconds,int Default)
+int TimedNumInput(int seconds,int Default)
 {
     int numInput;
     clock_t start = clock();
@@ -163,3 +191,13 @@ int TimedInput(int seconds,int Default)
     return numInput;
 }
 
+char TimedCharInput(int seconds,char Default)
+{
+    int charInput;
+    clock_t start = clock();
+    while ( ! _kbhit() )
+        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
+            return Default;
+    charInput = getch();
+    return charInput;
+}
