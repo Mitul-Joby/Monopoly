@@ -164,7 +164,15 @@ int ReadCards(int CardType)
                     switch(column){
                         case 0: drawnCard.ID=atoi(value);
                                 break;
-                        case 1: drawnCard.Type=atoi(value);
+                        case 1: if (strcmpi(value,"BAD")==0){
+                                    drawnCard.Type = BAD;
+                                }
+                                else if (strcmpi(value,"NUTRAL")==0){
+                                    drawnCard.Type = NEUTRAL;
+                                }
+                                else if (strcmpi(value,"GOOD")==0){
+                                    drawnCard.Type = GOOD;
+                                }
                                 break;
                         case 2: strcpy(drawnCard.Description,value);   
                                 break;    
@@ -178,26 +186,4 @@ int ReadCards(int CardType)
 		fclose(file);
 	}
     return EXIT_SUCCESS;
-}
-
-int TimedNumInput(int seconds,int Default)
-{
-    int numInput;
-    clock_t start = clock();
-    while ( ! _kbhit() )
-        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
-            return Default;
-    scanf("%d",&numInput);
-    return numInput;
-}
-
-char TimedCharInput(int seconds,char Default)
-{
-    int charInput;
-    clock_t start = clock();
-    while ( ! _kbhit() )
-        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
-            return Default;
-    charInput = getch();
-    return charInput;
 }

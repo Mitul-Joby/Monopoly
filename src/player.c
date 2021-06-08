@@ -63,9 +63,93 @@ int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
     return EXIT_SUCCESS;
 }
 
+int TimedNumInput(int seconds,int Default)
+{
+    int numInput;
+    clock_t start = clock();
+    while ( ! _kbhit() )
+        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
+            return Default;
+    scanf("%d",&numInput);
+    return numInput;
+}
+
+char TimedCharInput(int seconds,char Default)
+{
+    int charInput;
+    clock_t start = clock();
+    while ( ! _kbhit() )
+        if (((clock () - start)/ CLOCKS_PER_SEC ) >= seconds) 
+            return Default;
+    charInput = getch();
+    return charInput;
+}
+
+int PlayerMainMenu(char *name)
+{
+    char Choice;
+    for (int i=0;i<2;i++)
+    {
+        system("@cls||clear");
+        printf("\nMENU FOR %s",name);
+        printf("\nChoose an option:");
+        printf("\n  1-ROLL");
+        printf("\n  2-BUY HOUSES AND HOTELS");
+        printf("\n  3-SELL PROPERTIES");
+        printf("\n  X-GIVE UP");
+        printf("\n\nYou have 5 seconds or 1 will be chosen by default...");
+        Choice = TimedCharInput(5,0);
+        if(Choice == 0)
+        {
+            system("@cls||clear");
+            printf("\nYOU TOOK TOO LONG TO CHOOSE, ROLL WAS CHOSEN BY DEFAULT");
+            return ROLL;
+        }
+        else if(Choice =='1')
+        {
+            system("@cls||clear");
+            printf("\nYOU CHOSE TO ROLL"); 
+            return ROLL;
+        }    
+        else if(Choice =='2')
+        {
+            system("@cls||clear");
+            printf("\nYOU CHOSE TO BUY HOUSES AND HOTELS"); 
+            return BUY;
+        }
+        else if(Choice =='3')
+        {
+            system("@cls||clear");
+            printf("\nYOU CHOSE TO SELL PROPERTIES");
+            return SELL;
+        }
+        else if(Choice =='X'||Choice =='x')
+        {
+            system("@cls||clear");
+            printf("\nYOU CHOSE TO GIVE UP");
+            return GIVEUP;
+        }
+        else
+        {
+            if(i==0)
+            {
+                printf("\nYOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.");
+                printf("\nPRESS ANY KEY TO CONTINUE...");
+                TimedCharInput(5,0);
+            }
+            else
+            {
+                system("@cls||clear");
+                printf("\nYOU CHOSE TO ROLL BY DEFAULT"); 
+                return ROLL;
+            }
+        }
+    } 
+}
+
 int isPlayerBankrupt(int cashInHand)
 {
-    if(cashInHand>-500)
+    if(cashInHand>BANKRUPT_VALUE)
         return False;
     else
         return True;

@@ -45,8 +45,10 @@ int main()
         struct player Player[PlayerCount], *CurrentPlayer;
         printf("\n\nPlaying order based on highest roll of the dice:");
         for(int i=0;i<PlayerCount;i++){    
+            printf("\n%s",Names[i]);
+            
+            //Intialising player values
             strcpy(Player[i].name,Names[i]);
-            printf("\n%s",Player[i].name);
             Player[i].networth = Player[i].cashInHand = INTIAL_AMT;
             Player[i].position = 0;
             Player[i].isBankrupt = Player[i].isInJail = False;
@@ -64,7 +66,7 @@ int main()
             CurrentPlayer = &Player[ID];
             if(CurrentPlayer->isBankrupt)
             {
-                ;
+                ;// To be determined
             }
             else
             {
@@ -78,7 +80,7 @@ int main()
                             //CurrentPlayer->JailTurn=0;
                             //CurrentPlayer->isInJail=False;
                             //say can play next turn
-                        //if nah
+                        //if nah do ...
                         printf("\n\n%s is in Jail, wait for %d turn(s) to play.",CurrentPlayer->name,CurrentPlayer->JailTurn+1);
                         if(CurrentPlayer->JailTurn>0)
                             CurrentPlayer->JailTurn-=1;
@@ -90,72 +92,14 @@ int main()
                 }
                 else
                 {
+                     
+                    int Choice=0;
+                    Choice=PlayerMainMenu(CurrentPlayer->name); 
                     //MENU
                         //BUY HOUSES/HOTEL
                         //SELL PROPERIES
                         //ROLL
-                        //GIVE UP 
-
-                    //MAKE THIS A FUNCTION
-                    // char Choice=0;
-                    // for (int i=0;i<2;i++)
-                    // {
-                    //     system("@cls||clear");
-                    //     printf("\nMENU FOR %s",CurrentPlayer->name);
-                    //     printf("\nChoose an option:");
-                    //     printf("\n  1-ROLL");
-                    //     printf("\n  2-BUY HOUSES AND HOTELS");
-                    //     printf("\n  3-SELL PROPERTIES");
-                    //     printf("\n  X-GIVE UP");
-                    //     printf("\n\nYou have 5 seconds or 1 will be chosen by default...");
-                    //     Choice = TimedCharInput(5,0);
-                    //     if(Choice ==0)
-                    //     {
-                    //         system("@cls||clear");
-                    //         printf("\nYOU TOOK TOO LONG TO CHOOSE, ROLL WAS CHOSEN BY DEFAULT");
-                    //         break;
-                    //     }
-                    //     else if(Choice =='1')
-                    //     {
-                    //         system("@cls||clear");
-                    //         printf("\nYOU CHOSE TO ROLL");
-                    //         break;
-                    //     }    
-                    //     else if(Choice =='2')
-                    //     {
-                    //         system("@cls||clear");
-                    //         printf("\nYOU CHOSE TO BUY HOUSES AND HOTELS");
-                    //         break;
-                    //     }
-                    //     else if(Choice =='3')
-                    //     {
-                    //         system("@cls||clear");
-                    //         printf("\nYOU CHOSE TO SELL PROPERTIES");
-                    //         break;
-                    //     }
-                    //     else if(Choice =='X'||Choice =='x')
-                    //     {
-                    //         system("@cls||clear");
-                    //         printf("\nYOU CHOSE TO GIVE UP");
-                    //         return 0;
-                    //         break;
-                    //     }
-                    //     else
-                    //     {
-                    //         if(i==0)
-                    //         {
-                    //             printf("\nYOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.");
-                    //             printf("\nPRESS ANY KEY TO CONTINUE...");
-                    //             TimedCharInput(5,0);
-                    //         }
-                    //         else
-                    //         {
-                    //             system("@cls||clear");
-                    //             printf("\nYOU CHOSE TO ROLL BY DEFAULT");
-                    //             break;
-                    //         }
-                    //     }
-                    // } 
+                        //GIVE UP
                     // getch();
 
                     //IF ROLL CHOSEN/CERTAIN TIME PASSES
@@ -164,7 +108,7 @@ int main()
                             //If doubles, player can roll again
                                 //If 2/3 doubles, go to jail
 
-                    
+                    //Make this into a function?
                     die1=PlayerRolls();die2=PlayerRolls();dieTotal=die1+die2;
                     printf("\n\n%s rolls a %d and %d with a total of %d.",CurrentPlayer->name,die1,die2,dieTotal);
                     if (die1==die2){
@@ -176,12 +120,16 @@ int main()
 
                     if (wasDouble==2)    
                     {
+                        //Sending player to jail for two sets of doubles in a row
+
                         CurrentPlayer->currentLocation=&Location[30];
                         printf("\nSince %s rolled a double again, they are sent to JAIL for overspeeding.",CurrentPlayer->name);
                         wasDouble=0;
                     }
                     else
                     {
+                        //Moving current players's current location and checking if they passed START
+
                         if ((CurrentPlayer->currentLocation->ID)+dieTotal > MAX_LOCATIONS)
                         {
                             printf("\n%s passed %s and collects $200",CurrentPlayer->name,Location[0].name);
@@ -196,6 +144,9 @@ int main()
                     }
                     switch(CurrentPlayer->currentLocation->Type)
                     {
+                        //Performing actions based on location type
+                        //Make each case a function?
+
                         case FREE:
                         {
                             break;
@@ -206,6 +157,7 @@ int main()
                             //     printf("\nFile could not be opened\n");
                             //     return EXIT_FAILURE;
                             // }
+                            
                             //Something happens
                             break;
                         }    
@@ -215,15 +167,16 @@ int main()
                             //     printf("\nFile could not be opened\n");
                             //     return EXIT_FAILURE;
                             // }
+
                             //Something happens
                             break;
                         }
                         case JAIL:     
                         {
+                            wasDouble=0;
                             CurrentPlayer->currentLocation=&Location[30];
                             CurrentPlayer->isInJail=True;
                             CurrentPlayer->JailTurn=2;
-                                
                             break;
                         }   
                         case TAX:      
@@ -239,8 +192,7 @@ int main()
                             if(CurrentPlayer->currentLocation->isOwnable)
                             {
                                 //MENU
-                                    //BUY PROPERIES
-                                    //
+                                    //BUY THIS PROPERTY
                             }
                             else
                             {
@@ -262,6 +214,8 @@ int main()
                     }    
                 }
             }
+
+            //Next player plays if current player did not get doubles
             if (wasDouble!=0)
                 printf("\n\n%s plays again.",CurrentPlayer->name);
             else if (ID+1>=PlayerCount)
@@ -270,12 +224,15 @@ int main()
                 ID++;
             if (getch()=='x')
                 GamemodeChoice=EXIT;
-            //Do something based on gamemode
+
+            //Do/Check something based on gamemode
         }
 
         //Show player postions post game
     }
     
+    //Ask to return to main menu perhaps?
+
     //Thank you for playing message (perhaps)
     printf("\nThanks for playing");
     getch();

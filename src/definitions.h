@@ -1,27 +1,33 @@
+//Can be changed according to user requirement
+#define MAX_PLAYER      10
+#define INTIAL_AMT      1200
+#define BANKRUPT_VALUE  -500
+
+//Set based on number of records in csv files
+#define MAX_LOCATIONS   40
+#define MAX_CHESTCARDS  1
+#define MAX_CHANCECARDS 1
+
+//Path locations of files
+#define LOCATION_PATH "data/locations.csv"
+#define CHEST_PATH    "data/chest.csv"
+#define CHANCE_PATH   "data/chance.csv"
+
 #include <time.h>
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define LOCATION_PATH "data/locations.csv"
-#define CHEST_PATH    "data/chest.csv"
-#define CHANCE_PATH   "data/chance.csv"
-
-#define MAX_LOCATIONS   40
-#define MAX_CHESTCARDS  1
-#define MAX_CHANCECARDS 1
-#define MAX_PLAYER      10
-
-#define INTIAL_AMT    1200
-
 enum Boolean  {False,True};
 enum GameMode {NETWORTH,TURNS,ENDLESS,EXIT};
 enum Type     {FREE,CHEST,CHANCE,JAIL,UTILITY,TAX,RAIL,PROPERTY};
+enum CardType {BAD=-1,NEUTRAL=0,GOOD=1};
+enum MainMenu {ROLL,BUY,SELL,GIVEUP};
 
+//Structure of location information
 struct location
 {   
-
     unsigned int ID:7, Type:3, isOwnable:1;
     char name[30];
     unsigned short int Cost;
@@ -37,12 +43,14 @@ struct location
 
 }Location[MAX_LOCATIONS];
 
+//Structure of card information
 struct card
 {
     unsigned int ID:8, Type:3;
     char Description[100];
 }drawnCard;
 
+//Structure of player information
 struct player
 {
     unsigned int ID:7;
