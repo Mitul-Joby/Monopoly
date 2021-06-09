@@ -36,7 +36,7 @@ int ReadLocations()
 	else
     {
 		char buffer[1024];
-		int row = 0, column = 0, flag = 0;
+		int row = 0, column = 0;
 		while (fgets(buffer,1024, file)) {
 			column = 0; 
 			char* value = strtok(buffer, ",");
@@ -152,7 +152,7 @@ int ReadCards(int CardType)
         drawnCard.Type=0;
         strcpy(drawnCard.Description,0);
 		char buffer[1024];
-		int row = 0, column = 0, flag = 0;
+		int row = 0, column = 0;
 		while (fgets(buffer,1024, file)) {
 			column = 0; 
 			char* value = strtok(buffer, ",");
@@ -167,7 +167,7 @@ int ReadCards(int CardType)
                         case 1: if (strcmpi(value,"BAD")==0){
                                     drawnCard.Type = BAD;
                                 }
-                                else if (strcmpi(value,"NUTRAL")==0){
+                                else if (strcmpi(value,"NEUTRAL")==0){
                                     drawnCard.Type = NEUTRAL;
                                 }
                                 else if (strcmpi(value,"GOOD")==0){
