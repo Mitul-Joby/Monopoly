@@ -21,13 +21,13 @@
 
 enum Boolean  {False,True};
 enum GameMode {NETWORTH,TURNS,ENDLESS,EXIT};
-enum Type     {FREE,CHEST,CHANCE,JAIL,UTILITY,TAX,RAIL,PROPERTY};
+enum Type     {FREE,CHEST,CHANCE,JAIL,TAX,UTILITY,RAIL,PROPERTY};
 enum CardType {BAD=-1,NEUTRAL=0,GOOD=1};
 enum MainMenu {ROLL,BUY,SELL,GIVEUP};
 
 //Structure of location information
 struct location
-{   
+{       
     unsigned int ID:7, Type:3, isOwnable:1;
     char name[30];
     unsigned short int Cost;
@@ -46,7 +46,7 @@ struct location
 //Structure of card information
 struct card
 {
-    unsigned int ID:8, Type:3;
+    unsigned int ID:8, Type:3, Money, LocationID;
     char Description[100];
 }drawnCard;
 

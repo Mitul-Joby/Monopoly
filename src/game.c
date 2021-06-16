@@ -63,13 +63,13 @@ int ReadLocations()
                                     Location[row-1].Type = JAIL;   
                                     Location[row-1].isOwnable = False;
                                 }
-                                else if (strcmpi(value,"UTILITY")==0){
-                                    Location[row-1].Type = UTILITY;
-                                    Location[row-1].isOwnable = True;
-                                }
                                 else if (strcmpi(value,"TAX")==0){
                                     Location[row-1].Type = TAX;
                                     Location[row-1].isOwnable = False;
+                                }
+                                else if (strcmpi(value,"UTILITY")==0){
+                                    Location[row-1].Type = UTILITY;
+                                    Location[row-1].isOwnable = True;
                                 }
                                 else if (strcmpi(value,"RAIL")==0){
                                     Location[row-1].Type = RAIL;
@@ -86,10 +86,10 @@ int ReadLocations()
                         case 2: strcpy(Location[row-1].name,value);          
                                 break;    
                     }
-                    if (column==5 && Location[row-1].Type > 4){
+                    if (column==5 && Location[row-1].Type >= 5){
                         Location[row-1].Cost = atoi(value);
                     }
-                    if (column==6 && Location[row-1].Type > 5){
+                    if (column==6 && Location[row-1].Type >= 4){
                         Location[row-1].intialRent = atoi(value);
                         Location[row-1].Rent = atoi(value);
                     }
