@@ -40,7 +40,7 @@ int mainGame()
             return EXIT_FAILURE;
         }    
 
-        struct player Player[PlayerCount], *CurrentPlayer;
+        struct player Player[8], *CurrentPlayer;
 
         //Intialising player values
         for(int i=0;i<PlayerCount;i++){                    
@@ -134,6 +134,8 @@ int mainGame()
                 }
                 else
                 {
+                    // To do: Graphical Representaion of each property with info like no. of houses/hotels, set colour, property owner through colour 
+
                     goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NETWORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->networth);   
                     clearRightScreen(16);
                     int Choice=0;
@@ -177,11 +179,11 @@ int mainGame()
                             int OldLocationID = CurrentPlayer->currentLocation->ID;
                             if ((CurrentPlayer->currentLocation->ID)+dieTotal > MAX_LOCATIONS)
                             {
-                                graphicalMove(CurrentPlayer,CurrentPlayer->currentLocation->ID,30);
                                 goto_XY(95,23);printf("%s passed %s and collects $200!",CurrentPlayer->name,Location[0].name);
                                 CurrentPlayer->cashInHand += 200;
                                 CurrentPlayer->networth   += 200; 
                                 CurrentPlayer->currentLocation=&Location[((CurrentPlayer->currentLocation->ID)+dieTotal)-MAX_LOCATIONS-1];
+                                graphicalMove(CurrentPlayer,OldLocationID,CurrentPlayer->currentLocation->ID);      
                             }
                             else
                             {
@@ -225,7 +227,7 @@ int mainGame()
                                                 case 0 : printf("to the MAYOR!");break;
                                                 case 1 : printf("for car insurance!");break;
                                                 case 2 : printf("for health insurance!");break;
-                                                case 3 : printf("Monopoly man!");break;
+                                                case 3 : printf("to Monopoly man!");break;
                                                 default: printf("to the BANK!");break;
                                             }
                                             CurrentPlayer->cashInHand-=drawnCard.Money;                                        
@@ -234,8 +236,10 @@ int mainGame()
                                         }
                                         case NEUTRAL:
                                         {
+                                            int OldLocationID = CurrentPlayer->currentLocation->ID;
                                             goto_XY(95,26);printf("%s teleports!",CurrentPlayer->name,Location[drawnCard.LocationID].name);
                                             CurrentPlayer->currentLocation = &Location[drawnCard.LocationID];
+                                            graphicalMove(CurrentPlayer,OldLocationID,CurrentPlayer->currentLocation->ID);
                                             Teleported=True;
                                             goto LocationTeleporter;
                                             break;
@@ -428,15 +432,13 @@ int mainGame()
     return EXIT_SUCCESS;
 }
 
-
 int main()
 {
-    
     if (intro()!=EXIT_SUCCESS){
         printf("\nIntro Error\n");
         return EXIT_FAILURE;
     }
-        char Choice;
+    char Choice;
     while(True)
     {
         clearScreen();
