@@ -18,9 +18,23 @@ int TimedNumInput(int seconds,int Default);
 // Returns the character or else returns the Default value given when time elapses
 char TimedCharInput(int seconds,char Default);
 
+int clearRightScreen(int startLine);
+
 // Player Menu with timed input
 // Returns player choice.
-int PlayerMainMenu(char *name);
+int PlayerMainMenu(struct player *CurrentPlayer);
+
+int checkSet(struct player *currentPlayer ,struct location *currentLocation);
+
+int RentCalc(struct player *owner ,struct location *currentLocation, int rolled);
+
+int sellMenu(struct player *CurrentPlayer);
+
+int buyHousesMenu(struct player *CurrentPlayer);
+
+int buyMenu(struct player *CurrentPlayer,struct location *currentLocation);
 
 // Checks if player is bankrupt 
 int isPlayerBankrupt(int cashInHand);
+
+int playerResults(struct player Player[],int PlayerCount);
