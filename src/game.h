@@ -1,10 +1,6 @@
 
-int intro();
-
-int showRules();
-
 // Accepts game mode choice from user 
-// Returns the choice
+// Returns the choice NETWORTH/TURNS/ENDLESS/EXIT
 int SelectGamemode();
 
 // Reads location informations from file and stores them in structures
@@ -15,8 +11,10 @@ int ReadLocations();
 // Returns EXIT_SUCCESS if read properly
 int GenerateCard();
 
-int displayMap();
+// Clears screen and displays monopoly map
+// Returns EXIT_SUCCESS if displayed properly
+int DisplayMap();
 
-int graphicalMove(struct player *currentPlayer,int OldLocationID,int NewLocationID);
-
-int thankYou();
+// Displays Property information graphically
+// Returns EXIT_SUCCESS if displayed properly
+int GraphicalPropertyInfo(struct player Players[],int playerCount);

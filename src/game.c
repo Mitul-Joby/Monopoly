@@ -1,56 +1,12 @@
 #include "definitions.h"
-
-int intro()
-{
-    clearScreen();
-    printf("\n\n");
-    printf("\n                                   888       888 8888888888 888      .d8888b.   .d88888b.  888b     d888 8888888888      88888888888 .d88888b.       ");
-    printf("\n                                   888   o   888 888        888     d88P  Y88b d88P\" \"Y88b 8888b   d8888 888                 888    d88P\" \"Y88b  ");     
-    printf("\n                                   888  d8b  888 888        888     888    888 888     888 88888b.d88888 888                 888    888     888      ");
-    printf("\n                                   888 d888b 888 8888888    888     888        888     888 888Y88888P888 8888888             888    888     888      ");
-    printf("\n                                   888d88888b888 888        888     888        888     888 888 Y888P 888 888                 888    888     888      ");
-    printf("\n                                   88888P Y88888 888        888     888    888 888     888 888  Y8P  888 888                 888    888     888      ");
-    printf("\n                                   8888P   Y8888 888        888     Y88b  d88P Y88b. .d88P 888   \"   888 888                 888    Y88b. .d88P     "); 
-    printf("\n                                   888P     Y888 8888888888 88888888 \"Y8888P\"   \"Y88888P\"  888       888 8888888888          888     \"Y88888P\" ");                                                                                              
-    printf("\n\n\n\n");                                                                                                                                                                                                  
-    printf("\n                                              888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888    Y88b   d88P           "); 
-    printf("\n                                              8888b   d8888 d88P\" \"Y88b 8888b   888 d88P\" \"Y88b 888   Y88b d88P\" \"Y88b 888     Y88b d88P      ");       
-    printf("\n                                              88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888      Y88o88P             "); 
-    printf("\n                                              888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888       Y888P              "); 
-    printf("\n                                              888 Y888P 888 888     888 888 Y88b888 888     888 8888888P\"  888     888 888        888              ");  
-    printf("\n                                              888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888        888               "); 
-    printf("\n                                              888   \"   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888        888              ");  
-    printf("\n                                              888       888  \"Y88888P\"  888    Y888  \"Y88888P\"  888         \"Y88888P\"  88888888   888         ");       
-    goto_XY(130,40);printf("Press any key to continue...");getch();
-    return EXIT_SUCCESS;
-}
-
-int showRules()
-{
-    clearScreen();
-    printf("\n\n");
-    printf("\n          888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888    Y88b   d88P      8888888b.  888     888 888      8888888888 .d8888b.  ");
-    printf("\n          8888b   d8888 d88P\" \"Y88b 8888b   888 d88P\" \"Y88b 888   Y88b d88P\" \"Y88b 888     Y88b d88P       888   Y88b 888     888 888      888       d88P  Y88b ");
-    printf("\n          88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888      Y88o88P        888    888 888     888 888      888       Y88b.      ");
-    printf("\n          888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888       Y888P         888   d88P 888     888 888      8888888    \"Y888b.   ");
-    printf("\n          888 Y888P 888 888     888 888 Y88b888 888     888 8888888P\"  888     888 888        888          8888888P\"  888     888 888      888           \"Y88b. ");
-    printf("\n          888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888        888          888 T88b   888     888 888      888             \"888 ");
-    printf("\n          888   \"   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888        888          888  T88b  Y88b. .d88P 888      888       Y88b  d88P ");
-    printf("\n          888       888  \"Y88888P\"  888    Y888  \"Y88888P\"  888         \"Y88888P\"  88888888   888          888   T88b  \"Y88888P\"  88888888 8888888888 \"Y8888P\"  ");
-    printf("\n\n\n\n");                                                                                                                                                                                                  
-
-    goto_XY(130,40);printf("Press any key to continue...");getch();
-    return EXIT_SUCCESS;
-}
-
+#include "game.h"
 
 int SelectGamemode()
 {
-    char Choice;
-    while(True)
+    char choice;
+    while(TRUE)
     {
         clearScreen();
-        //int bannerlength=166;goto_XY((SCREENSIZE_X-(bannerlength))/2,2);
         printf("\n     .d8888b.  8888888888 888      8888888888 .d8888b. 88888888888       .d8888b.         d8888 888b     d888 8888888888 888b     d888  .d88888b.  8888888b.  8888888888 ");
         printf("\n    d88P  Y88b 888        888      888       d88P  Y88b    888          d88P  Y88b       d88888 8888b   d8888 888        8888b   d8888 d88P\" \"Y88b 888  \"Y88b 888        ");
         printf("\n    Y88b.      888        888      888       888    888    888          888    888      d88P888 88888b.d88888 888        88888b.d88888 888     888 888    888 888        ");
@@ -61,22 +17,22 @@ int SelectGamemode()
         printf("\n     \"Y8888P\"  8888888888 88888888 8888888888 \"Y8888P\"     888           \"Y8888P88 d88P     888 888       888 8888888888 888       888  \"Y88888P\"  8888888P\"  8888888888 ");
         printf("\n\n\n\n\n");
         printf("\n\tChoose a game mode:");
-        printf("\n\t  1-Networth : First player to reach a certain amount wins");
-        printf("\n\t  2-Turns    : Game ends after ceratin number of turns/rounds are over");
-        printf("\n\t  3-Endless  : Game goes on untill everyone except one player gets bankrupt");
+        printf("\n\t  1-Net Worth : First player to reach a certain amount wins");
+        printf("\n\t  2-Turns     : Game ends after ceratin number of turns/rounds are over");
+        printf("\n\t  3-Endless   : Game goes on untill everyone except one player gets bankrupt");
         printf("\n\t  X-Exit\n\n");
-        Choice = getch();
-        if (Choice == '1')
+        choice = getch();
+        if (choice == '1')
             return NETWORTH;
-        else if (Choice == '2')
+        else if (choice == '2')
             return TURNS;
-        else if (Choice == '3')
+        else if (choice == '3')
             return ENDLESS;
-        else if (Choice == 'X'|| Choice == 'x')
+        else if (choice == 'X'|| choice == 'x')
             return EXIT;
         else
         {
-            printf("\n\nYou entered an invalid choice \"%c\". Enter any key to try again.",Choice);
+            printf("\n\n\tYou entered an invalid choice \"%c\". Enter any key to try again.",choice);
             getch();
         }
     }
@@ -104,37 +60,37 @@ int ReadLocations()
                                 break;
                         case LocType_H: 
                                 if (strcmpi(value,"FREE")==0){
-                                    Location[row-1].Type = FREE;
-                                    Location[row-1].isOwnable = False;
+                                    Location[row-1].type = FREE;
+                                    Location[row-1].isOwnable = FALSE;
                                 }
                                 else if (strcmpi(value,"CHEST")==0){
-                                    Location[row-1].Type = CHEST;
-                                    Location[row-1].isOwnable = False;
+                                    Location[row-1].type = CHEST;
+                                    Location[row-1].isOwnable = FALSE;
                                 }
                                 else if (strcmpi(value,"CHANCE")==0){
-                                    Location[row-1].Type = CHANCE; 
-                                    Location[row-1].isOwnable = False;
+                                    Location[row-1].type = CHANCE; 
+                                    Location[row-1].isOwnable = FALSE;
                                 }
                                 else if (strcmpi(value,"JAIL")==0){
-                                    Location[row-1].Type = JAIL;   
-                                    Location[row-1].isOwnable = False;
+                                    Location[row-1].type = JAIL;   
+                                    Location[row-1].isOwnable = FALSE;
                                 }
                                 else if (strcmpi(value,"TAX")==0){
-                                    Location[row-1].Type = TAX;
-                                    Location[row-1].isOwnable = False;
+                                    Location[row-1].type = TAX;
+                                    Location[row-1].isOwnable = FALSE;
                                 }
                                 else if (strcmpi(value,"UTILITY")==0){
-                                    Location[row-1].Type = UTILITY;
-                                    Location[row-1].isOwnable = True;
+                                    Location[row-1].type = UTILITY;
+                                    Location[row-1].isOwnable = TRUE;
                                 }
                                 else if (strcmpi(value,"RAIL")==0){
-                                    Location[row-1].Type = RAIL;
-                                    Location[row-1].isOwnable = True;
+                                    Location[row-1].type = RAIL;
+                                    Location[row-1].isOwnable = TRUE;
                                 }
                                 else if (strcmpi(value,"PROPERTY")==0){
-                                    Location[row-1].Type = PROPERTY;   
-                                    Location[row-1].isOwnable = True;
-                                    Location[row-1].isSetComplete = False;
+                                    Location[row-1].type = PROPERTY;   
+                                    Location[row-1].isOwnable = TRUE;
+                                    Location[row-1].isSetComplete = FALSE;
                                     Location[row-1].housesBuilt = 0;
                                     Location[row-1].hotelBuilt  = 0;
                                 }   
@@ -143,20 +99,28 @@ int ReadLocations()
                                 strcpy(Location[row-1].name,value);          
                                 break;    
                     }
-                    if (column==Cost_H && Location[row-1].Type >= 5){
-                        Location[row-1].Cost = atoi(value);
+                    if (column==Cost_H && Location[row-1].type >= 5){
+                        Location[row-1].cost = atoi(value);
                     }
-                    if (column==Rent_H && Location[row-1].Type >= 4){
-                        Location[row-1].intialRent = atoi(value);
-                        Location[row-1].Rent = atoi(value);
+                    if (column==Rent_H && Location[row-1].type >= 4){
+                        Location[row-1].initialRent = atoi(value);
+                        Location[row-1].rent = atoi(value);
                     }
-                    if (Location[row-1].Type == PROPERTY){
+                    if (Location[row-1].type == PROPERTY){
                         switch(column){
                             case SetID_H: 
-                                    Location[row-1].SetID=atoi(value);
-                                    break;
-                            case ColourName_H: 
-                                    strcpy(Location[row-1].colourName,value);
+                                    Location[row-1].setID=atoi(value);
+                                    switch(Location[row-1].setID)
+                                    {
+                                        case 1 : Location[row-1].setColour=LIGHTBLACK_BG; break;
+                                        case 2 : Location[row-1].setColour=LIGHTCYAN_BG;  break;
+                                        case 3 : Location[row-1].setColour=LIGHTPURPLE_BG;break;
+                                        case 4 : Location[row-1].setColour=YELLOW_BG;     break;
+                                        case 5 : Location[row-1].setColour=LIGHTRED_BG;   break;
+                                        case 6 : Location[row-1].setColour=LIGHTYELLOW_BG;break;
+                                        case 7 : Location[row-1].setColour=LIGHTGREEN_BG; break;
+                                        case 8 : Location[row-1].setColour=LIGHTBLUE_BG;  break;
+                                    }
                                     break;
                             case H1_H: 
                                     Location[row-1].house[0]=atoi(value);
@@ -195,24 +159,23 @@ int GenerateCard()
     switch((rand()%(3))-1)
     {
         case -1:
-                drawnCard.Type =BAD;
-                drawnCard.Money=((rand()%(20))+1)*10;
+                drawnCard.type =BAD;
+                drawnCard.money=((rand()%(20))+1)*10;
                 break;
         case  0:
-                drawnCard.Type=NEUTRAL;
-                drawnCard.LocationID=rand()%(MAX_LOCATIONS);
-
+                drawnCard.type=NEUTRAL;
+                drawnCard.locationID=rand()%(40);
                 break;
         case  1:
-                drawnCard.Type=GOOD;
-                drawnCard.Money=((rand()%(30))+1)*10;
+                drawnCard.type=GOOD;
+                drawnCard.money=((rand()%(30))+1)*10;
                 break;
         default:return EXIT_FAILURE;
     } 
     return EXIT_SUCCESS;
 }
 
-int displayMap()
+int DisplayMap()
 {
     colour(BLACK,INCREASED_INTENSITY);
     clearScreen();
@@ -259,45 +222,52 @@ int displayMap()
     return EXIT_SUCCESS;
 }
 
-int graphicalMove(struct player *currentPlayer,int OldLocationID,int NewLocationID)
+int GraphicalPropertyInfo(struct player Players[],int playerCount)
 {
     int map[40][2]={{ 9,36},{ 9,33},{ 9,30},{ 9,27},{ 9,24},{ 9,21},{ 9,18},{ 9,15},{ 9,12},{ 9, 9},\
                     { 9, 6},{16, 6},{23, 6},{30, 6},{37, 6},{44, 6},{51, 6},{58, 6},{65, 6},{72, 6},\
                     {79, 6},{79, 9},{79,12},{79,15},{79,18},{79,21},{79,24},{79,27},{79,30},{79,33},\
                     {79,36},{72,36},{65,36},{58,36},{51,36},{44,36},{37,36},{30,36},{23,36},{16,36}};
     
-    int playerID = currentPlayer->ID;
-    goto_XY(map[OldLocationID-1][0]+(playerID-1)%4,map[OldLocationID-1][1]+(playerID-1)/4);
-    printf(" ");
-    colour(currentPlayer->colour1,currentPlayer->colour2);
-    goto_XY(map[NewLocationID-1][0]+(playerID-1)%4,map[NewLocationID-1][1]+(playerID-1)/4);
-    printf("o");
+    for (int i=0;i<40;i++)
+    {
+        int ID = Location[i].ID;
+        if (Location[i].type==PROPERTY||Location[i].type==RAIL||Location[i].type==UTILITY)
+        {
+            if (Location[i].type==PROPERTY)
+            {
+                goto_XY(map[ID-1][0]+5,map[ID-1][1]);
+                colour(Location[i].setColour,0);
+                printf(" ");
+                colour(RESET,RESET);
+            }        
+            if(Location[i].isOwnable)
+            {
+                colour(RESET,RESET);
+                goto_XY(map[ID-1][0]+4,map[ID-1][1]+1);
+                printf("  ");
+            }
+            else
+            {
+                for(int j=0;j<playerCount;j++)
+                {
+                    if (Location[i].ownerID==Players[j].ID)
+                    {
+                        goto_XY(map[ID-1][0]+4,map[ID-1][1]+1);
+                        colour(Players[j].colour1,Players[j].colour2);
+                        if (Location[i].hotelBuilt)
+                            printf("HL");
+                        else if (Location[i].housesBuilt>0)
+                            printf("%dH",Location[i].housesBuilt);
+                        else
+                            printf(" X");
+                        colour(RESET,RESET);
+                    }
+                }
+            }
+            
+        }
+    }
     colour(RESET,RESET);
-    return EXIT_SUCCESS;
-}
-
-int thankYou()
-{
-    clearScreen();
-    printf("\n\n");
-    printf("\n                              88888888888 888    888        d8888 888b    888 888    d8P   .d8888b.       8888888888 .d88888b.  8888888b.  ");
-    printf("\n                                  888     888    888       d88888 8888b   888 888   d8P   d88P  Y88b      888       d88P\" \"Y88b 888   Y88b ");
-    printf("\n                                  888     888    888      d88P888 88888b  888 888  d8P    Y88b.           888       888     888 888    888 ");
-    printf("\n                                  888     8888888888     d88P 888 888Y88b 888 888d88K      \"Y888b.        8888888   888     888 888   d88P ");
-    printf("\n                                  888     888    888    d88P  888 888 Y88b888 8888888b        \"Y88b.      888       888     888 8888888P\"  ");
-    printf("\n                                  888     888    888   d88P   888 888  Y88888 888  Y88b         \"888      888       888     888 888 T88b   ");
-    printf("\n                                  888     888    888  d8888888888 888   Y8888 888   Y88b  Y88b  d88P      888       Y88b. .d88P 888  T88b  ");
-    printf("\n                                  888     888    888 d88P     888 888    Y888 888    Y88b  \"Y8888P\"       888        \"Y88888P\"  888   T88b ");
-    printf("\n\n\n\n");                                                                                                                                           
-    printf("\n                                              8888888b.  888             d8888 Y88b   d88P 8888888 888b    888  .d8888b.  888              ");
-    printf("\n                                              888   Y88b 888            d88888  Y88b d88P    888   8888b   888 d88P  Y88b 888              ");
-    printf("\n                                              888    888 888           d88P888   Y88o88P     888   88888b  888 888    888 888              ");
-    printf("\n                                              888   d88P 888          d88P 888    Y888P      888   888Y88b 888 888        888              ");
-    printf("\n                                              8888888P\"  888         d88P  888     888       888   888 Y88b888 888  88888 888              ");
-    printf("\n                                              888        888        d88P   888     888       888   888  Y88888 888    888 Y8P              ");
-    printf("\n                                              888        888       d8888888888     888       888   888   Y8888 Y88b  d88P  \"               ");
-    printf("\n                                              888        88888888 d88P     888     888     8888888 888    Y888  \"Y8888P88 888              ");
-    printf("\n\n\n\n");                                                                                                                                                                                                  
-    goto_XY(130,40);printf("Press any key to continue...");getch();
     return EXIT_SUCCESS;
 }

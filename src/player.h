@@ -1,14 +1,22 @@
-// Player rolls a die
-// Returns a random value from 1-6
+// Emulates player rolling a die
+// Returns a random integer from 1-6
 int PlayerRolls();
 
 // Reads number of players and player names
-// Returns EXIT_SUCCESS if read properly.
+// Returns EXIT_SUCCESS if read properly
 int ReadPlayers(int *numberOfPlayers, char (*Names)[30]);
 
 // Each player rolls two dice and player order is set according to highest values
-// Returns EXIT_SUCCESS if set properly.
+// Returns EXIT_SUCCESS if set properly
 int SetPlayerOrder(int numberOfPlayers, char (*Names)[30]);
+
+// Initialise Player structure values
+// Returns EXIT_SUCCESS if set properly
+int InitialisePlayers(struct player Player[],int PlayerCount, char (*Names)[30]);
+
+// Places the player on the screen according to their current position and clears the previous one
+// Returns EXIT_SUCCESS if set properly
+int GraphicalMove(struct player *currentPlayer,int OldLocationID,int NewLocationID);
 
 // Accepts an integer input from the user within certain time
 // Returns the integer or else returns the Default value given when time elapses
@@ -18,23 +26,34 @@ int TimedNumInput(int seconds,int Default);
 // Returns the character or else returns the Default value given when time elapses
 char TimedCharInput(int seconds,char Default);
 
-int clearRightScreen(int startLine);
+// Clears right part of the screen form line given
+// Returns EXIT_SUCCESS if cleared properly
+int ClearRightScreen(int startLine);
 
 // Player Menu with timed input
-// Returns player choice.
+// Returns player choice: ROLL/BUY/SELL/GIVEUP
 int PlayerMainMenu(struct player *CurrentPlayer);
 
-int checkSet(struct player *currentPlayer ,struct location *currentLocation);
-
+// Calculates rent of location the player is currently on based on location type
+// Returns rent of the location
 int RentCalc(struct player *owner ,struct location *currentLocation, int rolled);
 
-int sellMenu(struct player *CurrentPlayer);
+// Sell Menu for current player based on locations they own
+// Returns EXIT_SUCCESS on success
+int SellMenu(struct player *CurrentPlayer);
 
-int buyHousesMenu(struct player *CurrentPlayer);
+// Buy houses and hotels Menu for current player based on locations they own
+// Returns EXIT_SUCCESS on success
+int BuyHousesMenu(struct player *CurrentPlayer);
 
-int buyMenu(struct player *CurrentPlayer,struct location *currentLocation);
+// Buy Property Menu for location player lands on
+// Returns EXIT_SUCCESS on success
+int BuyMenu(struct player *CurrentPlayer,struct location *currentLocation);
 
 // Checks if player is bankrupt 
-int isPlayerBankrupt(int cashInHand);
+// Returns TRUE/FALSE
+int IsPlayerBankrupt(int cashInHand);
 
-int playerResults(struct player Player[],int PlayerCount);
+// Shows leaderboards post game
+// Returns EXIT_SUCCESS on successful display
+int PlayerResults(struct player Player[],int PlayerCount);

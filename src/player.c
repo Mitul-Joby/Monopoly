@@ -1,4 +1,5 @@
 #include "definitions.h"
+#include "player.h"
 
 int PlayerRolls()
 {
@@ -8,9 +9,9 @@ int PlayerRolls()
 int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
 {
     char inp[1];
-    while (True){
+    while(TRUE) 
+    {
         clearScreen();
-        //goto_XY((SCREENSIZE_X-(145))/2,2);
         printf("\n              8888888b.  888             d8888 Y88b   d88P 8888888888 8888888b.       8888888b.  8888888888 88888888888     d8888 8888888 888      .d8888b.  ");
         printf("\n              888   Y88b 888            d88888  Y88b d88P  888        888   Y88b      888  \"Y88b 888            888        d88888   888   888     d88P  Y88b ");
         printf("\n              888    888 888           d88P888   Y88o88P   888        888    888      888    888 888            888       d88P888   888   888     Y88b.      ");
@@ -23,7 +24,7 @@ int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
         showCursor();
         printf("\n\tEnter the number of players: ");
         scanf("%s",&inp);
-        if (atoi(inp) >= 2 && atoi(inp) <= MAX_PLAYER){
+        if (atoi(inp) >= 2 && atoi(inp) <= 8){
             *numberOfPlayers=atoi(inp);
             break;
         }
@@ -31,7 +32,7 @@ int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
             exit(0);
             break;
         }
-        printf("\n\n\tInvalid Input (Enter a number from 2-%d or X to exit game) \n\tEntered: %s\n",MAX_PLAYER,inp);
+        printf("\n\n\tInvalid Input (Enter a number from 2-8 or X to exit game) \n\tEntered: %s\n",inp);
         goto_XY(0,SCREENSIZE_Y);printf("\tEnter any key to retry...");
         getch();
     }
@@ -46,7 +47,6 @@ int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
 int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
 {
     clearScreen();
-    //goto_XY((SCREENSIZE_X-(130))/2,2);
     printf("\n                      8888888b.  888             d8888 Y88b   d88P 8888888888 8888888b.        .d88888b.  8888888b.  8888888b.  8888888888 8888888b.  ");
     printf("\n                      888   Y88b 888            d88888  Y88b d88P  888        888   Y88b      d88P\" \"Y88b 888   Y88b 888  \"Y88b 888        888   Y88b "); 
     printf("\n                      888    888 888           d88P888   Y88o88P   888        888    888      888     888 888    888 888    888 888        888    888 ");
@@ -58,10 +58,10 @@ int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
     printf("\n\n\n\n");
     srand(time(0));
     int die1, die2, order[numberOfPlayers], len=strlen(Names[0]);
-    for (int i=0;i<numberOfPlayers;i++)
+    for (int i=0;i<numberOfPlayers;i++){
         if (len<strlen(Names[i]))
             len=strlen(Names[i]);
-
+    }
     for(int i=0;i<numberOfPlayers;i++){
         die1=PlayerRolls();
         die2=PlayerRolls();
@@ -92,6 +92,51 @@ int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
     return EXIT_SUCCESS;
 }
 
+int InitialisePlayers(struct player Player[],int PlayerCount, char (*Names)[30])
+{
+    for(int i=0;i<PlayerCount;i++){  
+        strcpy(Player[i].name,Names[i]);
+        Player[i].ID = i+1;
+        Player[i].netWorth = Player[i].cashInHand = INITIAL_AMT;
+        Player[i].jailTurn = Player[i].position = Player[i].propertyOwnedCount =  0;
+        Player[i].isOut = Player[i].isBankrupt = Player[i].isInJail = FALSE;
+        Player[i].currentLocation = &Location[0];
+        for(int j=0;j<20;j++)
+        {
+            Player[i].propertyOwned[j]=0;
+        }
+        switch(Player[i].ID)
+        {
+            case 1 : Player[i].colour1=RED;    Player[i].colour2=0;break;
+            case 2 : Player[i].colour1=GREEN;  Player[i].colour2=0;break;
+            case 3 : Player[i].colour1=BLUE;   Player[i].colour2=0;break;
+            case 4 : Player[i].colour1=PURPLE; Player[i].colour2=0;break;
+            case 5 : Player[i].colour1=CYAN;   Player[i].colour2=0;break;
+            case 6 : Player[i].colour1=YELLOW; Player[i].colour2=0;break;
+            case 7 : Player[i].colour1=PURPLE; Player[i].colour2=INCREASED_INTENSITY;break;
+            case 8 : Player[i].colour1=CYAN;   Player[i].colour2=INCREASED_INTENSITY;break;
+        }
+    }
+    return EXIT_SUCCESS;
+}
+
+int GraphicalMove(struct player *currentPlayer,int OldLocationID,int NewLocationID)
+{
+    int map[40][2]={{ 9,36},{ 9,33},{ 9,30},{ 9,27},{ 9,24},{ 9,21},{ 9,18},{ 9,15},{ 9,12},{ 9, 9},\
+                    { 9, 6},{16, 6},{23, 6},{30, 6},{37, 6},{44, 6},{51, 6},{58, 6},{65, 6},{72, 6},\
+                    {79, 6},{79, 9},{79,12},{79,15},{79,18},{79,21},{79,24},{79,27},{79,30},{79,33},\
+                    {79,36},{72,36},{65,36},{58,36},{51,36},{44,36},{37,36},{30,36},{23,36},{16,36}};
+    
+    int playerID = currentPlayer->ID;
+    goto_XY(map[OldLocationID-1][0]+(playerID-1)%4,map[OldLocationID-1][1]+(playerID-1)/4);
+    printf(" ");
+    colour(currentPlayer->colour1,currentPlayer->colour2);
+    goto_XY(map[NewLocationID-1][0]+(playerID-1)%4,map[NewLocationID-1][1]+(playerID-1)/4);
+    printf("o");
+    colour(RESET,RESET);
+    return EXIT_SUCCESS;
+}
+
 int TimedNumInput(int seconds,int Default)
 {
     int numInput;
@@ -114,7 +159,7 @@ char TimedCharInput(int seconds,char Default)
     return charInput;
 }
 
-int clearRightScreen(int startLine)
+int ClearRightScreen(int startLine)
 {
     for (int i=startLine;i<SCREENSIZE_Y;i++)
     {
@@ -122,6 +167,7 @@ int clearRightScreen(int startLine)
         for(int j=0;j<(SCREENSIZE_X-95);j++)
             printf(" ");
     }
+    return EXIT_SUCCESS;
 }
 
 int PlayerMainMenu(struct player *CurrentPlayer)
@@ -129,8 +175,8 @@ int PlayerMainMenu(struct player *CurrentPlayer)
     char Choice;
     for (int i=0;i<2;i++)
     {
-        clearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NETWORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->networth);          
+        ClearRightScreen(0);
+        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
         goto_XY(95,5); printf("MENU FOR %s",CurrentPlayer->name);
         goto_XY(95,6); printf("Choose an option:");
         goto_XY(95,7); printf("  1-ROLL");
@@ -169,7 +215,7 @@ int PlayerMainMenu(struct player *CurrentPlayer)
         {
             if(i==0)
             {
-                goto_XY(95,15);printf("YOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.",Choice);
+                goto_XY(95,15);printf("YOU CHOSE AN INVALID OPTION. YOU CAN TRY ONCE AGAIN.");
                 goto_XY(95,16);printf("PRESS ANY KEY TO CONTINUE...");
                 TimedCharInput(5,0);
             }
@@ -182,94 +228,57 @@ int PlayerMainMenu(struct player *CurrentPlayer)
     } 
 }
 
-int checkSet(struct player *currentPlayer ,struct location *currentLocation)
-{
-    for(int i;i<MAX_LOCATIONS;i++)
-    {
-        if(Location->isOwnable && currentLocation->SetID==Location[i].SetID && Location[i].SetID!=0)
-        {
-            if(currentPlayer->ID!=Location[i].ownerID)
-            {
-                for(int i;i<MAX_LOCATIONS;i++){
-                    if(currentLocation->SetID==Location[i].SetID && currentPlayer->ID==Location[i].ownerID){
-                        currentLocation->isSetComplete=False;
-                    }
-                }
-                for(int i;i<10;i++){
-                    if(currentPlayer->SetsOwned[i]==currentLocation->SetID){
-                        currentPlayer->SetsOwned[i]=0;
-                        currentPlayer->SetsOwnedCount--;
-                    }
-                }
-                return EXIT_SUCCESS;
-            }
-        }
-    }
-    for(int i;i<MAX_LOCATIONS;i++){
-        if(currentLocation->SetID==Location[i].SetID && currentPlayer->ID==Location[i].ownerID){
-            currentLocation->isSetComplete=True;
-        }
-    }
-    for(int i;i<10;i++){
-        if(currentPlayer->SetsOwned[i]==0){
-            currentPlayer->SetsOwned[i]=currentLocation->SetID;
-            currentPlayer->SetsOwnedCount++;
-        }
-    }
-    return EXIT_SUCCESS;
-}
-
 int RentCalc(struct player *owner ,struct location *currentLocation, int rolled)
 {
-    if(currentLocation->Type==RAIL)
+    if(currentLocation->type==RAIL)
     {
         int RailsOwned;
-        for(int i=0;i<MAX_LOCATIONS;i++){
-            if(Location[i].Type==RAIL && Location->ownerID==owner->ID){
+        for(int i=0;i<40;i++){
+            if(Location[i].type==RAIL && Location->ownerID==owner->ID){
                 RailsOwned++;
             }
         }
-        for(int i=0;i<MAX_LOCATIONS;i++){
-            if(Location[i].Type==RAIL && Location->ownerID==owner->ID){
-                Location[i].Rent=25*RailsOwned;
+        for(int i=0;i<40;i++){
+            if(Location[i].type==RAIL && Location->ownerID==owner->ID){
+                Location[i].rent=25*RailsOwned;
             }
         }
     }
-    else if(currentLocation->Type==UTILITY)
+    else if(currentLocation->type==UTILITY)
     {
         int UtilitiesOwned;
-        for(int i=0;i<MAX_LOCATIONS;i++){
-            if(Location[i].Type==UTILITY && Location->ownerID==owner->ID){
+        for(int i=0;i<40;i++){
+            if(Location[i].type==UTILITY && Location->ownerID==owner->ID){
                 UtilitiesOwned++;
             }
         }
-        for(int i=0;i<MAX_LOCATIONS;i++){
-            if(Location[i].Type==UTILITY && Location->ownerID==owner->ID){
+        for(int i=0;i<40;i++){
+            if(Location[i].type==UTILITY && Location->ownerID==owner->ID){
                 if (UtilitiesOwned==1)
-                    Location[i].Rent=4*rolled;
+                    Location[i].rent=4*rolled;
                 else if (UtilitiesOwned==2)
-                    Location[i].Rent=10*rolled;
+                    Location[i].rent=10*rolled;
             }
         }
     }
-    return currentLocation->Rent;
+    return currentLocation->rent;
 }
 
-int sellMenu(struct player *CurrentPlayer)
+int SellMenu(struct player *CurrentPlayer)
 {
-    char Choice;
+    int ChoiceInt;
     for (int i=0;i<2;i++)
     {
         int j=0;
-        clearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NETWORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->networth);          
+        ClearRightScreen(0);
+        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
         goto_XY(95,5); printf("SELL MENU FOR %s",CurrentPlayer->name);
         goto_XY(95,6); printf("Choose a property to sell:");
-        if(CurrentPlayer->PropertyOwnedCount>0)
+        if(CurrentPlayer->propertyOwnedCount>0)
         {
-            for(j=0;j<CurrentPlayer->PropertyOwnedCount;j++)
+            for(j=0;j<CurrentPlayer->propertyOwnedCount;j++)
             {
-                goto_XY(95,7+j); printf("  %2d-SELL %s",j+1,Location[ CurrentPlayer->PropertyOwned[j]-1 ].name);
+                goto_XY(95,7+j); printf("  %2d-SELL %s",j+1,Location[ CurrentPlayer->propertyOwned[j]-1 ].name);
             }
         }
         else 
@@ -278,57 +287,54 @@ int sellMenu(struct player *CurrentPlayer)
             goto_XY(95,11);printf("ROLLING BY DEFAULT"); 
             return EXIT_SUCCESS;
         }
-        goto_XY(95,7+j);printf("   X-CONTINUE AND ROLL");
-        goto_XY(95,9+j);printf("You have 10 seconds or X will be chosen by default...");
-        Choice = TimedCharInput(10,0);
-        if(Choice == 0)
+        goto_XY(95,7+j);printf("  %2d-CONTINUE AND ROLL",j+1);
+        goto_XY(95,9+j);printf("You have 15 seconds or X will be chosen by default...");
+        ChoiceInt = TimedNumInput(15,0);
+        if(ChoiceInt == 0)
         {
             goto_XY(95,11+j);printf("YOU TOOK TOO LONG TO CHOOSE, CONTINUE AND ROLL WAS CHOSEN BY DEFAULT");
             return EXIT_SUCCESS;
         }
-        else if(Choice =='X'||Choice =='x')
+        else if(ChoiceInt == j+1)
         {
             goto_XY(95,11+j);printf("YOU CHOSE TO CONTINUE AND ROLL");
             return EXIT_SUCCESS;
         }
         else
         {
-            int ChoiceInt = Choice-'0';
-            if (1<=ChoiceInt && ChoiceInt<=CurrentPlayer->PropertyOwnedCount)
+            if (1<=ChoiceInt && ChoiceInt<=CurrentPlayer->propertyOwnedCount)
             {
-                int ID = CurrentPlayer->PropertyOwned[ChoiceInt-1] -1;
+                int ID = CurrentPlayer->propertyOwned[ChoiceInt-1] -1;
                 int cost;
-                if (Location[ID].Type==PROPERTY) 
-                    cost=Location[ID].Cost + (Location[ID].housesBuilt + Location[ID].hotelBuilt)*Location[ID].buildCost;
+                if (Location[ID].type==PROPERTY) 
+                    cost=Location[ID].cost + (Location[ID].housesBuilt + Location[ID].hotelBuilt)*Location[ID].buildCost;
                 else
-                    cost=Location[ID].Cost;
+                    cost=Location[ID].cost;
                 goto_XY(95,11+j); printf("SOLD %s FOR $%d",Location[ID].name,cost);
                 CurrentPlayer->cashInHand += cost;
-                CurrentPlayer->networth   += cost;
-                CurrentPlayer->PropertyOwnedCount--;
-                Location[ID].isOwnable=True;
+                CurrentPlayer->propertyOwnedCount--;
+                Location[ID].isOwnable=TRUE;
                 Location[ID].ownerID=0;
                 Location[ID].housesBuilt=0;
-                Location[ID].hotelBuilt=False;
-                Location[ID].isSetComplete=False;
-                Location[ID].Rent=Location[ID].intialRent;
+                Location[ID].hotelBuilt=FALSE;
+                Location[ID].isSetComplete=FALSE;
+                Location[ID].rent=Location[ID].initialRent;
                 for(int s1=ChoiceInt-1; s1<19; s1++){
-                    CurrentPlayer->PropertyOwned[s1]=CurrentPlayer->PropertyOwned[s1+1];
+                    CurrentPlayer->propertyOwned[s1]=CurrentPlayer->propertyOwned[s1+1];
                 }        
-                CurrentPlayer->PropertyOwned[19]=0;  
-                if(checkSet(CurrentPlayer,&Location[ID])!=EXIT_SUCCESS)
-                {
-                    goto_XY(0,SCREENSIZE_Y-2);
-                    printf("\nSet Check Error at Location Record: %d",ID);
-                    return EXIT_FAILURE;
+                CurrentPlayer->propertyOwned[19]=0;  
+                for(int s2=0;s2<40;s2++){
+                    if(Location[ID].setID==Location[s2].setID)
+                        Location[s2].isSetComplete=FALSE;
                 }
+
                 return EXIT_SUCCESS;
             }
             else 
             {
                 if(i==0)
                 {
-                    goto_XY(95,11+j);printf("YOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.",Choice);
+                    goto_XY(95,11+j);printf("YOU CHOSE AN INVALID OPTION. YOU CAN TRY ONCE AGAIN.");
                     goto_XY(95,12+j);printf("PRESS ANY KEY TO CONTINUE...");
                     TimedCharInput(5,0);
                 }
@@ -342,22 +348,22 @@ int sellMenu(struct player *CurrentPlayer)
     } 
 }
 
-int buyHousesMenu(struct player *CurrentPlayer)
+int BuyHousesMenu(struct player *CurrentPlayer)
 {
-    char Choice;
+    int ChoiceInt;
     for (int i=0;i<2;i++)
     {
         int j=0;
-        clearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NETWORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->networth);          
+        ClearRightScreen(0);
+        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
         goto_XY(95,5); printf("BUY HOUSES AND HOTELS MENU FOR %s",CurrentPlayer->name);
         goto_XY(95,6); printf("Choose an option for your properties:");
-        if(CurrentPlayer->PropertyOwnedCount>0)
+        if(CurrentPlayer->propertyOwnedCount>0)
         {
-            for(j=0;j<CurrentPlayer->PropertyOwnedCount;j++)
+            for(j=0;j<CurrentPlayer->propertyOwnedCount;j++)
             {
                 goto_XY(95,7+j); 
-                printf("  %2d-BUY HOUSES/HOTEL FOR %s",j+1,Location[ CurrentPlayer->PropertyOwned[j]-1 ].name);
+                printf("  %2d-BUY HOUSES/HOTEL FOR %s",j+1,Location[ CurrentPlayer->propertyOwned[j]-1 ].name);
             }
         }
         else 
@@ -366,41 +372,58 @@ int buyHousesMenu(struct player *CurrentPlayer)
             goto_XY(95,11);printf("YOU CHOSE TO CONTINUE AND ROLL BY DEFAULT"); 
             return EXIT_SUCCESS;
         }
-        goto_XY(95,7+j);printf("   X-CONTINUE AND ROLL");
-        goto_XY(95,9+j);printf("You have 10 seconds or X will be chosen by default...");
-        Choice = TimedCharInput(10,0);
-        if(Choice == 0)
+        goto_XY(95,7+j);printf("  %2d-CONTINUE AND ROLL",j+1);
+        goto_XY(95,9+j);printf("You have 15 seconds or X will be chosen by default...");
+        ChoiceInt = TimedNumInput(15,0);
+        if(ChoiceInt == 0)
         {
             goto_XY(95,11+j);printf("YOU TOOK TOO LONG TO CHOOSE, CONTINUE AND ROLL WAS CHOSEN BY DEFAULT");
             return EXIT_SUCCESS;
         }
-        else if(Choice =='X'||Choice =='x')
+        else if(ChoiceInt ==j+1)
         {
             goto_XY(95,11+j);printf("YOU CHOSE TO CONTINUE AND ROLL");
             return EXIT_SUCCESS;
         }
         else
         {
-            int ChoiceInt = Choice-'0';
-            if (1<=ChoiceInt && ChoiceInt<=CurrentPlayer->PropertyOwnedCount)
+            if (1<=ChoiceInt && ChoiceInt<=CurrentPlayer->propertyOwnedCount)
             {
-                int ID = CurrentPlayer->PropertyOwned[ChoiceInt-1];
-                if(Location[ID].Type==PROPERTY)
-                {
+                int ID = CurrentPlayer->propertyOwned[ChoiceInt-1]-1;
+                if(Location[ID].type==PROPERTY)
+                {       
+                    int flag=TRUE;                 
+                    for(int id=0;id<40;id++)
+                    {
+                        if(Location[id].setID!=0 && Location[id].type==PROPERTY && Location[ID].setID==Location[id].setID)
+                        {
+                            if(Location[id].ownerID!=CurrentPlayer->ID)
+                            {
+                                flag=FALSE;
+                            }
+                        }
+                    }
+                    for(int id=0;id<40;id++){
+                        if(Location[ID].setID!=0 && Location[ID].setID==Location[id].setID && Location[ID].ownerID==Location[id].ownerID){
+                            Location[id].isSetComplete=flag;
+                        }
+                    } 
                     if (Location[ID].isSetComplete)
                     {
                         char buildChoice;
-                        goto_XY(95,11+j); printf("Do you want to build houses or a hotel?:");
+                        goto_XY(95,11+j); printf("Do you want to build houses or a hotel?");
                         goto_XY(95,12+j); printf(" 1-HOUSES");
                         goto_XY(95,13+j); printf(" 2-HOTELS");
                         goto_XY(95,14+j); printf(" X-NONE");
+                        hideCursor();
                         buildChoice=getch();
+                        showCursor();
                         if (buildChoice=='1')
                         {
                             int count;
                             goto_XY(95,15+j); printf("HOW MANY HOUSES WOULD YOU LIKE TO BUILD (1-4):");
                             scanf("%d",&count);
-                            if( 0>(count+Location[ID].housesBuilt) && (count+Location[ID].housesBuilt)>4)
+                            if((count+Location[ID].housesBuilt)>4)
                             {
                                 goto_XY(95,16+j); 
                                 printf("CANNOT BUILD %d MORE HOUSES! %d HOUSES ALREADY PRESENT!",count,Location[ID].housesBuilt);
@@ -411,15 +434,9 @@ int buyHousesMenu(struct player *CurrentPlayer)
                                 {
                                     CurrentPlayer->cashInHand-=count*Location[ID].buildCost;
                                     Location[ID].housesBuilt+=count;
-                                    Location[ID].Rent=Location[ID].house[Location[ID].housesBuilt];
+                                    Location[ID].rent=Location[ID].house[Location[ID].housesBuilt];
                                     goto_XY(95,16+j); 
                                     printf("PROPERTY \"%s\" NOW HAS %d HOUSES!",Location[ID].name,Location[ID].housesBuilt);
-                                    if(checkSet(CurrentPlayer,&Location[ID])!=EXIT_SUCCESS)
-                                    {
-                                        goto_XY(0,SCREENSIZE_Y-2);
-                                        printf("\nSet Check Error at Location Record: %d",ID);
-                                        return EXIT_FAILURE;
-                                    }
                                 }
                                 else
                                 {
@@ -427,10 +444,11 @@ int buyHousesMenu(struct player *CurrentPlayer)
                                     printf("INSUFFICIENT BALANCE!");
                                 }
                             }
+                            return EXIT_SUCCESS;
                         }
                         else if (buildChoice=='2')
                         { 
-                            if(Location[ID].housesBuilt==True)
+                            if(Location[ID].housesBuilt==TRUE)
                             {
                                 goto_XY(95,15+j); 
                                 printf("PROPERTY ALREADY HAS A HOTEL!");
@@ -444,27 +462,22 @@ int buyHousesMenu(struct player *CurrentPlayer)
                                 else if(CurrentPlayer->cashInHand>=(Location[ID].buildCost))
                                 {
                                     CurrentPlayer->cashInHand-=Location[ID].buildCost;
-                                    Location[ID].hotelBuilt=True;
-                                    Location[ID].Rent=Location[ID].hotel;
+                                    Location[ID].hotelBuilt=TRUE;
+                                    Location[ID].rent=Location[ID].hotel;
                                     goto_XY(95,15+j); 
                                     printf("PROPERTY \"%s\" NOW HAS A HOTEL!",Location[ID].name);
-                                    if(checkSet(CurrentPlayer,&Location[ID])!=EXIT_SUCCESS)
-                                    {
-                                        goto_XY(0,SCREENSIZE_Y-2);
-                                        printf("\nSet Check Error at Location Record: %d",ID);
-                                        return EXIT_FAILURE;
-                                    }
                                 }
                                 else
                                 {
                                     goto_XY(95,16+j); 
                                     printf("INSUFFICIENT BALANCE!");
                                 }
+                                return EXIT_SUCCESS;
                             }
                         }
                         else 
                             return EXIT_SUCCESS;
-                        
+
                     }
                     else
                     {
@@ -486,7 +499,7 @@ int buyHousesMenu(struct player *CurrentPlayer)
             {
                 if(i==0)
                 {
-                    goto_XY(95,11+j);printf("YOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.",Choice);
+                    goto_XY(95,11+j);printf("YOU CHOSE AN INVALID OPTION . YOU CAN TRY ONCE AGAIN.");
                     goto_XY(95,12+j);printf("PRESS ANY KEY TO CONTINUE...");
                     TimedCharInput(5,0);
                 }
@@ -500,16 +513,16 @@ int buyHousesMenu(struct player *CurrentPlayer)
     } 
 }
 
-int buyMenu(struct player *CurrentPlayer,struct location *currentLocation)
+int BuyMenu(struct player *CurrentPlayer,struct location *currentLocation)
 {
     char Choice;
     for (int i=0;i<2;i++)
     {
-        clearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NETWORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->networth);   
+        ClearRightScreen(0);
+        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
            
         goto_XY(95,5); printf("MENU FOR %s",CurrentPlayer->name);
-        goto_XY(95,6); printf("Would you like to buy %s for $%d ?:",currentLocation->name,currentLocation->Cost);
+        goto_XY(95,6); printf("Would you like to buy %s for $%d ?",currentLocation->name,currentLocation->cost);
         goto_XY(95,7); printf("  1-YES");
         goto_XY(95,8); printf("  2-NO");
         goto_XY(95,10);printf("You have 10 seconds or 2 will be chosen by default...");
@@ -523,7 +536,7 @@ int buyMenu(struct player *CurrentPlayer,struct location *currentLocation)
         {
             if(currentLocation->isOwnable)
             {
-                if (currentLocation->Cost>CurrentPlayer->cashInHand)
+                if (currentLocation->cost>CurrentPlayer->cashInHand)
                 {
                     goto_XY(95,15);
                     printf("INSUFFICIENT BALANCE");
@@ -531,18 +544,11 @@ int buyMenu(struct player *CurrentPlayer,struct location *currentLocation)
                 else
                 {
                     goto_XY(95,15);printf("BOUGHT %s!",currentLocation->name);
-                    currentLocation->isOwnable=False;
+                    currentLocation->isOwnable=FALSE;
                     currentLocation->ownerID=CurrentPlayer->ID;
-                    CurrentPlayer->cashInHand -= currentLocation->Cost;
-                    CurrentPlayer->PropertyOwned[CurrentPlayer->PropertyOwnedCount]=currentLocation->ID;
-                    CurrentPlayer->PropertyOwnedCount++;
-
-                    if(checkSet(CurrentPlayer,currentLocation)!=EXIT_SUCCESS)
-                    {
-                        goto_XY(0,SCREENSIZE_Y-2);
-                        printf("\nSet Check Error at Location Record: %d",currentLocation->ID);
-                        return EXIT_FAILURE;
-                    }
+                    CurrentPlayer->cashInHand -= currentLocation->cost;
+                    CurrentPlayer->propertyOwned[CurrentPlayer->propertyOwnedCount]=currentLocation->ID;
+                    CurrentPlayer->propertyOwnedCount++;
                 }
             }
             else
@@ -561,7 +567,7 @@ int buyMenu(struct player *CurrentPlayer,struct location *currentLocation)
         {
             if(i==0)
             {
-                goto_XY(95,15);printf("YOU CHOSE AN INVALID OPTION '%c'. YOU CAN TRY ONCE AGAIN.",Choice);
+                goto_XY(95,15);printf("YOU CHOSE AN INVALID OPTION. YOU CAN TRY ONCE AGAIN.");
                 goto_XY(95,16);printf("PRESS ANY KEY TO CONTINUE...");
                 TimedCharInput(5,0);
             }
@@ -574,15 +580,15 @@ int buyMenu(struct player *CurrentPlayer,struct location *currentLocation)
     } 
 }
 
-int isPlayerBankrupt(int cashInHand)
+int IsPlayerBankrupt(int cashInHand)
 {
     if(cashInHand>BANKRUPT_VALUE)
-        return False;
+        return FALSE;
     else
-        return True;
+        return TRUE;
 }
 
-int playerResults(struct player Player[],int PlayerCount)
+int PlayerResults(struct player Player[],int PlayerCount)
 {       
     printf("\n");         
     printf("\n                                                 8888888b.  8888888888 .d8888b.  888     888 888    88888888888 .d8888b.  ");
@@ -613,12 +619,12 @@ int playerResults(struct player Player[],int PlayerCount)
             {   
                 if(Player[j].position==0)
                 {
-                    if(Player[j].networth>HighestNetworth)
+                    if(Player[j].netWorth>HighestNetworth)
                     {
-                        HighestNetworth=Player[j].networth;
+                        HighestNetworth=Player[j].netWorth;
                         array[i]=j+1;
                     }
-                    else if(Player[j].networth==HighestNetworth)
+                    else if(Player[j].netWorth==HighestNetworth)
                     {
                         int HighestCashInHand=0;
                         for (int j=0;j<PlayerCount;j++)
@@ -638,9 +644,9 @@ int playerResults(struct player Player[],int PlayerCount)
             Player[array[i]-1].position=i+1;
         }
     }
-    printf("\n\t\t%9s     %*s     %13s     %9s","POSITION",len,"PLAYER NAME","CASH IN HAND","NETWORTH");
+    printf("\n\t\t%9s     %*s     %13s     %9s","POSITION",len,"PLAYER NAME","CASH IN HAND","NET WORTH");
     for (int i=0; i<PlayerCount; i++){
-        printf("\n\t\t%9d     %*s     %13d     %9d",Player[array[i]-1].position,len,Player[array[i]-1].name,Player[array[i]-1].cashInHand,Player[array[i]-1].networth);
+        printf("\n\t\t%9d     %*s     %13d     %9d",Player[array[i]-1].position,len,Player[array[i]-1].name,Player[array[i]-1].cashInHand,Player[array[i]-1].netWorth);
     }
     return EXIT_SUCCESS;
 }
