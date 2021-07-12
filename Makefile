@@ -3,7 +3,7 @@ Monopoly: obj .\obj\main.o .\obj\maingame.o .\obj\game.o .\obj\player.o
 	@echo Make successful
 
 obj:
-	MD obj
+	MKDIR obj
 
 .\obj\main.o: .\src\main.c
 	gcc -c .\src\main.c -o .\obj\main.o
