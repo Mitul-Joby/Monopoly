@@ -1,3 +1,8 @@
+<p align="center">
+  <img alt="C" src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white">
+  <img alt="WINDOWS" src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white">
+</p>
+
 # Monopoly In C
  This is an implementation of the board game Monopoly in C for windows systems.
 
