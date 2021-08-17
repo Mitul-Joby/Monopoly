@@ -176,8 +176,20 @@ int PlayerMainMenu(struct player *CurrentPlayer)
     for (int i=0;i<2;i++)
     {
         ClearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
-        goto_XY(95,5); printf("MENU FOR %s",CurrentPlayer->name);
+
+        goto_XY(95,3);         
+        printf("PLAYER: ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        printf("CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+        
+        goto_XY(95,5); 
+        printf("MENU FOR ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        
         goto_XY(95,6); printf("Choose an option:");
         goto_XY(95,7); printf("  1-ROLL");
         goto_XY(95,8); printf("  2-BUY HOUSES AND HOTELS");
@@ -271,8 +283,19 @@ int SellMenu(struct player *CurrentPlayer)
     {
         int j=0;
         ClearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
-        goto_XY(95,5); printf("SELL MENU FOR %s",CurrentPlayer->name);
+
+        goto_XY(95,3); 
+        printf("PLAYER: ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        printf("CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+
+        goto_XY(95,5); printf("SELL MENU FOR ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+
         goto_XY(95,6); printf("Choose a property to sell:");
         if(CurrentPlayer->propertyOwnedCount>0)
         {
@@ -355,8 +378,20 @@ int BuyHousesMenu(struct player *CurrentPlayer)
     {
         int j=0;
         ClearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);          
-        goto_XY(95,5); printf("BUY HOUSES AND HOTELS MENU FOR %s",CurrentPlayer->name);
+        
+        goto_XY(95,3); 
+        printf("PLAYER: ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        printf("CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+
+        goto_XY(95,5); 
+        printf("BUY HOUSES AND HOTELS MENU FOR ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        
         goto_XY(95,6); printf("Choose an option for your properties:");
         if(CurrentPlayer->propertyOwnedCount>0)
         {
@@ -519,9 +554,19 @@ int BuyMenu(struct player *CurrentPlayer,struct location *currentLocation)
     for (int i=0;i<2;i++)
     {
         ClearRightScreen(0);
-        goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
-           
-        goto_XY(95,5); printf("MENU FOR %s",CurrentPlayer->name);
+
+        goto_XY(95,3); 
+        printf("PLAYER: ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        printf("CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+
+        goto_XY(95,5); printf("MENU FOR ");
+        colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+        printf("%s ",CurrentPlayer->name);
+        colour(RESET,RESET);
+        
         goto_XY(95,6); printf("Would you like to buy %s for $%d ?",currentLocation->name,currentLocation->cost);
         goto_XY(95,7); printf("  1-YES");
         goto_XY(95,8); printf("  2-NO");

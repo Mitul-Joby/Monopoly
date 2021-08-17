@@ -169,9 +169,14 @@ int mainGame()
                 }
                 else
                 {
-                    // To do: Graphical Representaion of each property with info like no. of houses/hotels, set colour, property owner through colour 
-
-                    goto_XY(95,3); printf("PLAYER: %s CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->name,CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+                    
+                    goto_XY(95,3); 
+                    printf("PLAYER: ");
+                    colour(CurrentPlayer->colour1,CurrentPlayer->colour2);
+                    printf("%s ",CurrentPlayer->name);
+                    colour(RESET,RESET);
+                    printf("CASH IN HAND: $%d NET WORTH: $%d                              ",CurrentPlayer->cashInHand,CurrentPlayer->netWorth);   
+                    
                     ClearRightScreen(16);
                     int Choice=0;
                     if (wasDouble==0)
@@ -197,7 +202,7 @@ int mainGame()
                         int Teleported;
                         if (wasDouble==MAX_DOUBLES)    
                         {
-                            //Sending player to jail for two sets of doubles in a row
+                            //Sending player to jail for MAX_DOUBLES sets of doubles in a row
                             int OldLocationID = CurrentPlayer->currentLocation->ID;
                             CurrentPlayer->currentLocation=&Location[30];
                             goto_XY(95,23);printf("Since %s rolled a double again, they are sent to JAIL for overspeeding.",CurrentPlayer->name);
