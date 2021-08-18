@@ -29,20 +29,59 @@ int Intro()
 
 int ShowRules()
 {
-    clearScreen();
-    printf("\n\n");
-    printf("\n          888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888    Y88b   d88P      8888888b.  888     888 888      8888888888 .d8888b.  ");
-    printf("\n          8888b   d8888 d88P\" \"Y88b 8888b   888 d88P\" \"Y88b 888   Y88b d88P\" \"Y88b 888     Y88b d88P       888   Y88b 888     888 888      888       d88P  Y88b ");
-    printf("\n          88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888      Y88o88P        888    888 888     888 888      888       Y88b.      ");
-    printf("\n          888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888       Y888P         888   d88P 888     888 888      8888888    \"Y888b.   ");
-    printf("\n          888 Y888P 888 888     888 888 Y88b888 888     888 8888888P\"  888     888 888        888          8888888P\"  888     888 888      888           \"Y88b. ");
-    printf("\n          888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888        888          888 T88b   888     888 888      888             \"888 ");
-    printf("\n          888   \"   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888        888          888  T88b  Y88b. .d88P 888      888       Y88b  d88P ");
-    printf("\n          888       888  \"Y88888P\"  888    Y888  \"Y88888P\"  888         \"Y88888P\"  88888888   888          888   T88b  \"Y88888P\"  88888888 8888888888 \"Y8888P\"  ");
-    printf("\n\n\n\n");                                                                                                                                                                                                  
-    goto_XY(130,40);
-    printf("Press any key to continue...");
-    getch();
+    for (int i=0; i<2; i++)
+    {
+        clearScreen();
+        printf("\n          888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888    Y88b   d88P      8888888b.  888     888 888      8888888888 .d8888b.  ");
+        printf("\n          8888b   d8888 d88P\" \"Y88b 8888b   888 d88P\" \"Y88b 888   Y88b d88P\" \"Y88b 888     Y88b d88P       888   Y88b 888     888 888      888       d88P  Y88b ");
+        printf("\n          88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888      Y88o88P        888    888 888     888 888      888       Y88b.      ");
+        printf("\n          888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888       Y888P         888   d88P 888     888 888      8888888    \"Y888b.   ");
+        printf("\n          888 Y888P 888 888     888 888 Y88b888 888     888 8888888P\"  888     888 888        888          8888888P\"  888     888 888      888           \"Y88b. ");
+        printf("\n          888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888        888          888 T88b   888     888 888      888             \"888 ");
+        printf("\n          888   \"   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888        888          888  T88b  Y88b. .d88P 888      888       Y88b  d88P ");
+        printf("\n          888       888  \"Y88888P\"  888    Y888  \"Y88888P\"  888         \"Y88888P\"  88888888   888          888   T88b  \"Y88888P\"  88888888 8888888888 \"Y8888P\"  ");
+        printf("\n");  
+        if (i==0) 
+        {  
+            printf("\n\tOBJECTIVE OF THE GAME");
+            printf("\n\tBecome the wealthiest player through buying, renting and selling of property and force other players into bankruptcy.");
+            printf("\n\n\tGAMEPLAY");
+            printf("\n\tAt the start, each player throws the dice. The player with the highest total starts the play.");
+            printf("\n\tAll players start at \"START\" and are given the opportunity roll the two dice.");
+            printf("\n\tBased on the total of the two, the player moves to a location and can buy the property, or pay rent/tax, draw a Chance/Community Chest card, Go To Jail, or etc...");
+            printf("\n\tIf the player throws doubles, they move their token and are subject to any privileges or penalties pertaining to the space on which they land.");
+            printf("\n\tThen they can throw again and move their token as before.However, if the player ever throws doubles three times in succession, they are immediately sent to jail.");
+            goto_XY(130,40);
+            printf("Press any key to continue to next page...");
+            getch();
+        }
+        else
+        {
+            printf("\n\tSTART");
+            printf("\n\tEach time a player passes over START the player is paid a $200 salary.");
+            printf("\n\n\tBUYING PROPERTY");
+            printf("\n\tWhen a player lands on an unowned property they can buy that property at its printed price.");
+            printf("\n\n\tPAYING RENT");
+            printf("\n\tWhen a player lands on a property owned by another player, the owner collects rent in accordance with factors like no. of houses, hotels, etc.");
+            printf("\n\n\tCHANCE AND COMMUNITY CHEST");
+            printf("\n\tWhen a player lands here, they can recieve a certain amount, have to pay a certain amount, or teleport to a random location.");
+            printf("\n\n\tJAIL");
+            printf("\n\tA player can be sent to jail when they land on \"GO TO JAIL\" or roll a certain number of doubles.");
+            printf("\n\tThe player is given the option to pay a certain amount to get out or can stay for a certain number of turns.");
+            printf("\n\tIf the player stays, at each turn, the number of turns to wait is displayed. The player cannot sell properties or buy houses/hotels when in jail.");
+            printf("\n\n\tFREE PARKING");
+            printf("\n\tJust a free location with no reward or pentaly.");
+            printf("\n\n\tHOUSES AND HOTELS");
+            printf("\n\tIf the player has completed a set, they are now allowed to buy a max of 4 Houses or a hotel if they have a sufficient balance.");
+            printf("\n\tThe player can build houses in only property type locations whose sets are completed.");
+            printf("\n\tThe player can only build a hotel if 4 houses have been built.");
+            printf("\n\n\tBANKRUPTCY");
+            printf("\n\tWhen the player has an amount lesser than -500 in hand, they are bankrupt and out. Players can sell properties to avoid so.");                                                                                                                                                                     
+            goto_XY(130,40);
+            printf("Press any key to continue...");
+            getch();
+        }
+    }
     return EXIT_SUCCESS;
 }
 
@@ -509,3 +548,4 @@ int ThankYou()
     getch();
     return EXIT_SUCCESS;
 }
+    
