@@ -50,7 +50,7 @@ int ShowRules()
             printf("\n\tAll players start at \"START\" and are given the opportunity roll the two dice.");
             printf("\n\tBased on the total of the two, the player moves to a location and can buy the property, or pay rent/tax, draw a Chance/Community Chest card, Go To Jail, or etc...");
             printf("\n\tIf the player throws doubles, they move their token and are subject to any privileges or penalties pertaining to the space on which they land.");
-            printf("\n\tThen they can throw again and move their token as before.However, if the player ever throws doubles three times in succession, they are immediately sent to jail.");
+            printf("\n\tThen they can throw again and move their token as before. However, if the player ever throws doubles three times in succession, they are immediately sent to jail.");
             goto_XY(130,40);
             printf("Press any key to continue to next page...");
             getch();
