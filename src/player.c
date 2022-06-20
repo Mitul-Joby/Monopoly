@@ -39,7 +39,7 @@ int ReadPlayers(int *numberOfPlayers, char (*Names)[30])
     for (int i=0;i<*numberOfPlayers;i++){
         printf("\n\tPlayer %d enter name: ",i+1);
         fflush(stdin);
-        scanf("%[^\n]s",&Names[i]);
+        scanf("%s",&Names[i]);
     } 
     return EXIT_SUCCESS;
 }
@@ -57,7 +57,7 @@ int SetPlayerOrder(int numberOfPlayers, char (*Names)[30])
     printf("\n                      888        88888888 d88P     888     888     8888888888 888   T88b       \"Y88888P\"  888   T88b 8888888P\"  8888888888 888   T88b ");
     printf("\n\n\n\n");
     srand(time(0));
-    int die1, die2, order[numberOfPlayers], len=strlen(Names[0]);
+    int die1, die2, order[10], len=strlen(Names[0]);
     for (int i=0;i<numberOfPlayers;i++){
         if (len<strlen(Names[i]))
             len=strlen(Names[i]);
@@ -645,7 +645,7 @@ int PlayerResults(struct player Player[],int PlayerCount)
     printf("\n                                                 888  T88b  888       Y88b  d88P Y88b. .d88P 888        888    Y88b  d88P ");
     printf("\n                                                 888   T88b 8888888888 \"Y8888P\"   \"Y88888P\"  88888888   888     \"Y8888P\"  ");
     printf("\n\n\n\n\n");
-    int len=12,array[PlayerCount];
+    int len=12,array[10];
     for (int i=0;i<PlayerCount;i++)
         array[i]=0;
     for (int i=0;i<PlayerCount;i++)

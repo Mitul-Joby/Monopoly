@@ -1,3 +1,6 @@
+#ifndef DEFINITIONS_H_
+#define DEFINITIONS_H_
+
 // System specific
 #define SCREENSIZE_X    172
 #define SCREENSIZE_Y    40
@@ -11,10 +14,15 @@
 #define LOCATION_PATH   "data/locations.csv"
 
 #include <time.h>
+#include <ctype.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "sysSpecific.h"
+
+#ifdef _WIN32
+#include <conio.h>
+#endif
 
 #define clearScreen()   system("@cls||clear")
 #define goto_XY(X,Y)    printf("%c[%d;%df",0x1B,Y,X)
@@ -33,7 +41,7 @@ enum CardType {BAD=-1,NEUTRAL,GOOD};
 enum MainMenu {ROLL,BUY,SELL,GIVEUP};
 
 // Structure containing location information
-struct location
+extern struct location
 {       
     unsigned int ID  :6;                    // Uniquely identify location (1-40)
     unsigned int type:3;                    // Type of location: FREE/CHEST/CHANCE/JAIL/TAX/UTILITY/RAIL/PROPERTY
@@ -55,12 +63,12 @@ struct location
 Location[40];                               // Locations read from csv file
 
 // Structure containing card information
-struct card
+extern struct card
 {
     int type:3;                             // Type of card: BAD/NEUTRAL/GOOD
     unsigned int money;                     // Money associated with the card
     unsigned int locationID:6;              // Location ID associated with card 
-}drawnCard;
+} drawnCard;
 
 // Structure containing player information
 struct player
@@ -79,3 +87,5 @@ struct player
     unsigned short int propertyOwned[20];   // Lists of properties the player owns
     unsigned int position:4;                // Position of the player post-game
 };
+
+#endif

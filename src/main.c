@@ -2,6 +2,7 @@
 
 int main()
 {
+    checkWindowSize(SCREENSIZE_X, SCREENSIZE_Y);
     if (Intro()!=EXIT_SUCCESS){
         printf("\nIntro Error\n");
         return EXIT_FAILURE;

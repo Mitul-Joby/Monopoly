@@ -1,10 +1,11 @@
 <p align="center">
   <img alt="C" src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white">
   <img alt="WINDOWS" src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white">
+  <img alt="LINUX" src="https://img.shields.io/badge/Linux-0078D6?style=for-the-badge&logo=linux&logoColor=white">
 </p>
 
 # Monopoly In C
- This is an implementation of the board game Monopoly in C for windows systems.
+ This is an implementation of the board game Monopoly in C for windows and linux systems.
 
 ## THE GAME
 
@@ -171,6 +172,5 @@ After the game ends, a thank you screen is shown.
 
 
 ## Future Plans
- - Might extend to linux based systems.
- - Might add automatic command prompt resizing and resolution detection and accordingly setting up. 
+ - Might add terminal resizing. 
  

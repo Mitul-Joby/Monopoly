@@ -476,7 +476,7 @@ int mainGame()
                     if (Players[i].netWorth>=maxNetworth)
                     {
                         ClearRightScreen(0);
-                        goto_XY(95,5);printf("%s HAS ATTAINED A NET WORTH OF %d !",strupr(Players[i].name),Players[i].netWorth);
+                        goto_XY(95,5);printf("%s HAS ATTAINED A NET WORTH OF %d !", Players[i].name, Players[i].netWorth);
                         Players[i].position=1;
                         GamemodeChoice=EXIT;
                     }

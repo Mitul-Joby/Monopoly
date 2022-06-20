@@ -1,3 +1,5 @@
+#ifndef GAME_H_
+#define GAME_H_
 
 // Accepts game mode choice from user 
 // Returns the choice NETWORTH/TURNS/ENDLESS/EXIT
@@ -18,3 +20,5 @@ int DisplayMap();
 // Displays Property information graphically
 // Returns EXIT_SUCCESS if displayed properly
 int GraphicalPropertyInfo(struct player Players[],int playerCount);
+
+#endif

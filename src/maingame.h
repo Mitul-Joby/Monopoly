@@ -1,3 +1,6 @@
+#ifndef MAINGAME_H_
+#define MAINGAME_H_
+
 #include "definitions.h"
 #include "game.h"
 #include "player.h"
@@ -17,3 +20,5 @@ int mainGame();
 // Clears screen and displays intro screen "THANKS FOR PLAYING"
 // Returns EXIT_SUCCESS when displayed properly
 int ThankYou();
+
+#endif

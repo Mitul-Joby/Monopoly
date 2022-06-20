@@ -1,3 +1,6 @@
+#ifndef PLAYER_H_
+#define PLAYER_H_
+
 // Emulates player rolling a die
 // Returns a random integer from 1-6
 int PlayerRolls();
@@ -57,3 +60,5 @@ int IsPlayerBankrupt(int cashInHand);
 // Shows leaderboards post game
 // Returns EXIT_SUCCESS on successful display
 int PlayerResults(struct player Player[],int PlayerCount);
+
+#endif

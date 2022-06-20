@@ -53,41 +53,41 @@ int ReadLocations()
             while (value) {
                 if (row == 0)
 				    break;
-                if (strcmpi(value,"-")!=0){    
+                if (strcmp(value,"-")!=0){    
                     switch(column){
                         case ID_H: 
                                 Location[row-1].ID = atoi(value);
                                 break;
                         case LocType_H: 
-                                if (strcmpi(value,"FREE")==0){
+                                if (strcmp(value,"FREE")==0){
                                     Location[row-1].type = FREE;
                                     Location[row-1].isOwnable = FALSE;
                                 }
-                                else if (strcmpi(value,"CHEST")==0){
+                                else if (strcmp(value,"CHEST")==0){
                                     Location[row-1].type = CHEST;
                                     Location[row-1].isOwnable = FALSE;
                                 }
-                                else if (strcmpi(value,"CHANCE")==0){
+                                else if (strcmp(value,"CHANCE")==0){
                                     Location[row-1].type = CHANCE; 
                                     Location[row-1].isOwnable = FALSE;
                                 }
-                                else if (strcmpi(value,"JAIL")==0){
+                                else if (strcmp(value,"JAIL")==0){
                                     Location[row-1].type = JAIL;   
                                     Location[row-1].isOwnable = FALSE;
                                 }
-                                else if (strcmpi(value,"TAX")==0){
+                                else if (strcmp(value,"TAX")==0){
                                     Location[row-1].type = TAX;
                                     Location[row-1].isOwnable = FALSE;
                                 }
-                                else if (strcmpi(value,"UTILITY")==0){
+                                else if (strcmp(value,"UTILITY")==0){
                                     Location[row-1].type = UTILITY;
                                     Location[row-1].isOwnable = TRUE;
                                 }
-                                else if (strcmpi(value,"RAIL")==0){
+                                else if (strcmp(value,"RAIL")==0){
                                     Location[row-1].type = RAIL;
                                     Location[row-1].isOwnable = TRUE;
                                 }
-                                else if (strcmpi(value,"PROPERTY")==0){
+                                else if (strcmp(value,"PROPERTY")==0){
                                     Location[row-1].type = PROPERTY;   
                                     Location[row-1].isOwnable = TRUE;
                                     Location[row-1].isSetComplete = FALSE;
