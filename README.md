@@ -7,7 +7,7 @@
 # Monopoly In C
  This is an implementation of the board game Monopoly in C for windows and linux systems.
  
- [![demo](https://asciinema.org/a/IR4cNplkJlQ4EzHXj5bCdK8W9.svg)](https://asciinema.org/a/IR4cNplkJlQ4EzHXj5bCdK8W9?autoplay=1)
+ [![demo](https://asciinema.org/a/8cv6Z66rvO4yutmeDleUXnuIJ.svg)](https://asciinema.org/a/8cv6Z66rvO4yutmeDleUXnuIJ?autoplay=1)
 
 ## THE GAME
 
